@@ -1,0 +1,21 @@
+# Logfile created on 2013-12-30 23:51:35 -0500 by logger.rb/36483
+D, [2013-12-30T23:51:35.145260 #80682] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-30T23:56:35.305863 #80694] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-30T23:56:35.312371 #80694] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-31T00:03:05.178589 #80763] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-31T00:03:05.186748 #80763] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-31T14:27:29.973229 #82931] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-31T14:32:10.654750 #82944] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-31T14:33:37.476388 #82950] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-31T14:37:00.260962 #82983] DEBUG -- : REQUESTING PAGE: GET / with {} and HTTP headers {}
+D, [2013-12-31T14:42:03.678918 #83018] DEBUG -- : REQUESTING PAGE: GET posts/index with {} and HTTP headers {}
+D, [2013-12-31T14:42:28.988389 #83018] DEBUG -- : REQUESTING PAGE: GET posts/index with {} and HTTP headers {"HTTP_REFERER"=>"posts/index"}
+D, [2013-12-31T14:43:42.955804 #83026] DEBUG -- : REQUESTING PAGE: GET posts/index with {} and HTTP headers {}
+D, [2013-12-31T14:44:49.225805 #83034] DEBUG -- : REQUESTING PAGE: GET posts/index with {} and HTTP headers {}
+D, [2013-12-31T14:45:28.882567 #83042] DEBUG -- : REQUESTING PAGE: GET posts/index with {} and HTTP headers {}
+D, [2013-12-31T14:52:06.167711 #83076] DEBUG -- : REQUESTING PAGE: GET /posts/index with {} and HTTP headers {}
+D, [2013-12-31T14:52:26.012488 #83082] DEBUG -- : REQUESTING PAGE: GET /posts/index with {} and HTTP headers {}
+D, [2013-12-31T14:57:11.003059 #83082] DEBUG -- : REQUESTING PAGE: GET /posts/index with {} and HTTP headers {"HTTP_REFERER"=>"/posts/index"}
+D, [2013-12-31T15:00:36.920904 #83095] DEBUG -- : REQUESTING PAGE: GET /posts/index with {} and HTTP headers {}
+D, [2013-12-31T15:05:14.548915 #83108] DEBUG -- : REQUESTING PAGE: GET /posts/index with {} and HTTP headers {}
+D, [2013-12-31T15:05:28.253067 #83108] DEBUG -- : REQUESTING PAGE: GET /posts/index with {} and HTTP headers {"HTTP_REFERER"=>"/posts/index"}

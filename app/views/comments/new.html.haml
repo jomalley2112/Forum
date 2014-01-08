@@ -1,0 +1,8 @@
+%h3= "Add a comment to Post #{@post.title}"
+
+=form_for [@post, @comment] do |f|
+	.field= f.label :body
+	%br/ 
+	.field= f.text_area :body
+	%br/ 
+	.action= f.submit "Add comment"

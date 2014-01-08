@@ -1,0 +1,47 @@
+
+%h3
+	-if @user
+		= "Posted by #{@user.username}"
+	-elsif @for_user_id
+		= "Posted by " + User.find(@for_user_id).username
+	-else
+		Current Posts
+%br/ 
+%table{:style => "width: 100%"}
+	%tr 
+		%td{:style => "vertical-align: bottom"}  
+			#sort
+				=form_tag posts_path, :method => :get, :class => "sort pull-left" do |f|
+					&nbsp;
+					= label_tag :sort_by
+					= select_tag :sort_by, options_for_select(["Age", "Title", "Comments"], params[:sort_by]), :onchange => "submit()"
+		%td{:style => "width: 300px"} &nbsp;
+		%td 	
+			#search
+				=form_tag "", :method => :get, :class => "navbar-search" do
+					=text_field_tag :query, params[:query], :class => "search-query", :placeholder => "Search"
+				%button{:class => "icon-search close", :type => "submit"}
+				%button{:class => "close"} &times;
+		%td{:style => "width: 10px"} &nbsp;
+		%table{:border => "0"}
+			-@posts.each do |post|
+				%div.post{:style => "border: 2px #888888 solid"}
+					.posted_by= link_to "posted by #{post.user.username}", posts_path(:user_id => post.user.id)
+					%h4{:class => "post-header"}= post.title
+					%div{:style => "width: 700px"}
+						%div
+							%b= post.public ? "Public - " : "Private - "
+							= get_age(post.created_at, "hours").to_s + " hours old"
+						%div=post.body
+						%br/ 
+						%div.comments_count= pluralize(post.comments.size, 'comment')
+						-post.comments.each_with_index do |comment, i|
+							= "Comment " + (i + 1).to_s + ":" + comment.body
+							%br/
+						=link_to "add a comment", new_post_comment_path(post)
+						-if @user
+							|
+							=link_to "edit post", edit_post_path(post)
+							|
+							=link_to "delete post", destroy_post_path(:id => post.id)
+

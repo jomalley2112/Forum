@@ -1,0 +1,13 @@
+=form_for @post do |f|
+	%table 
+		%tr 
+			%td= f.label :title
+			%td= f.text_field :title
+		%tr 
+			%td= f.label :body
+			%td= f.text_area :body
+		%tr 
+			%td= f.label :public
+			%td= f.check_box :public
+		%tr 
+			%td{:colspan => "2"}= f.submit "Submit Post"

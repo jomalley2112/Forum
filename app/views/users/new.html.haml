@@ -1,0 +1,26 @@
+%h3 Sign up to be a member!
+
+=form_for @user do |f|
+	-if @user.errors.any?
+		%div.error_messages
+			%h2 Form is invalid
+			%ul 
+				-for message in @user.errors.full_messages
+					%li= message
+        
+	%table 
+		%tr 
+			%td.field= f.label :username
+			%td.field= f.text_field :username
+		%tr 
+			%td.field= f.label :email
+			%td.field= f.text_field :email
+		%tr 
+			%td.field= f.label :password
+			%td.field= f.password_field :password
+		%tr 
+			%td.field= f.label :password_confirmation
+			%td.field= f.password_field :password_confirmation
+		%tr 
+			%td.actions{:colspan => "2"}= f.submit
+			

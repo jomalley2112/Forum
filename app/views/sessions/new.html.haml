@@ -1,0 +1,11 @@
+%h3 Member log in
+=form_tag sessions_path do
+	%table
+		%tr 
+			%td.field= label_tag :username
+			%td.field= text_field_tag :username
+		%tr 
+			%td.field= label_tag :password
+			%td.field= password_field_tag :password
+		%tr 
+			%td.actions{:colspan => "2"}= submit_tag "Log in"
