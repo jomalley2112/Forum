@@ -1,14 +1,9 @@
 %h3 Sign up to be a member!
 
 =form_for @user do |f|
-	-if @user.errors.any?
-		%div.error_messages
-			%h2 Form is invalid
-			%ul 
-				-for message in @user.errors.full_messages
-					%li= message
+	
         
-	%table 
+	%table{:class => "rounded small-frm"}
 		%tr 
 			%td.field= f.label :username
 			%td.field= f.text_field :username
@@ -22,5 +17,5 @@
 			%td.field= f.label :password_confirmation
 			%td.field= f.password_field :password_confirmation
 		%tr 
-			%td.actions{:colspan => "2"}= f.submit
+			%td.btn-cell{:colspan => "2"}= f.submit
 			

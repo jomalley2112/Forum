@@ -1,13 +1,14 @@
 =form_for @post do |f|
-	%table 
+	%table{:class => "rounded small-frm"}
 		%tr 
-			%td= f.label :title
-			%td= f.text_field :title
+			%td.lbl-sngl-ln= f.label :title
+			%td= f.text_field :title, :class => "form-field"
 		%tr 
-			%td= f.label :body
-			%td= f.text_area :body
+			%td{:class => "lbl"}= f.label :body
+			%td= f.text_area :body, :class => "form-field"
 		%tr 
-			%td= f.label :public
+			%td{:class => "lbl"}= f.label :public
 			%td= f.check_box :public
 		%tr 
-			%td{:colspan => "2"}= f.submit "Submit Post"
+			%td.btn-cell{:colspan => "2", :style => "padding-top: 10px;"}
+				= f.submit "Submit Post", :class => "btn"

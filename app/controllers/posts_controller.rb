@@ -1,23 +1,27 @@
 class PostsController < ApplicationController
   def index
-    if current_user && current_user.is_member
-      if request.fullpath != "/"
-        redirect_to user_posts_path(params) and return
-      else
-        conditions = "1=1"
-      end
-    else
-      conditions = "public = 1"
-    end
-    @for_user_id = params[:user_id]
-    conditions += @for_user_id ?  " and user_id = #{@for_user_id}" : ""
+    scope = Post.all
     if qry_str = params[:query]
-      @searched = true
-      conditions += " and (title like '%#{qry_str}%' or body like '%#{qry_str}%')"
-    else
-      conditions += " and 1=1"
+      @searched = true #let the view know its from a search
+      scope = Post.for_search(qry_str)
     end
-    @posts = Post.ordered_by(params[:sort_by]).where(conditions)
+    if current_user && current_user.is_member
+      @member = true
+      if request.fullpath.gsub(/\/\?.*/, "").split("/").length > 1
+        #if there's anything passed to the root other than a ?-delimited param set then it must be trying to go to user-specific posts
+        redirect_to user_posts_path(params) and return
+      end
+    elsif !@searched
+      scope = Post.public_only
+    else
+      scope = scope.where(false) #catch all for security...probably not needed
+    end
+    if @for_user_id = params[:user_id]
+      scope = scope.where(:user_id => @for_user_id) #Post.for_user(@for_user_id)
+    end
+    @posts = scope.ordered_by(params[:sort_by])
+    @search_form_action = root_url
+    flash.now.notice = view_context.pluralize(@posts.size, "post") + " matched your search" if @searched
   end
 
   def user_posts
@@ -27,15 +31,15 @@ class PostsController < ApplicationController
     else
       conditions = "1=1"
     end
-    #WE Should ALWAYS HAVE A REAL USER HERE
     @user = current_user #this is used in view
     @posts = User.posts_ordered_by(current_user.id, params[:sort_by]).where(conditions)
+    @search_form_action = user_posts_path
     flash.now.notice = view_context.pluralize(@posts.size, "post") + " matched your search" if @searched
     render :index
   end
 
-  def show
-  end
+  # def show
+  # end
 
   def edit
     @post = Post.find(params[:id])
@@ -54,7 +58,7 @@ class PostsController < ApplicationController
 
   def new
     redirect_to(root_url, :alert => "You must login before you can create or manage posts") and return unless current_user
-    @post = current_user.posts.build #Post.new
+    @post = current_user.posts.build
   end
 
   def create
@@ -63,7 +67,8 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to posts_path, :notice => "Congratulations your post has been posted to the Forum!"
     else
-      flash.now.notice = "Unable to save new post."
+      #flash.now.alert = "Unable to save new post." + @post.errors.messages
+      flash_alert(@post, "Unable to save new post.")
       render :new
     end
   end

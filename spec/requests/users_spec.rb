@@ -141,7 +141,7 @@ feature "Users" do
   		page.should have_content("Post 1")
   		page.should have_content("Post 3")
   		page.should have_content("Post 2")
-  		page.should have_content("Comment 1:This is a comment for post 'Post 2'")
+      page.should have_content("This is a comment for post 'Post 2'")
 	 end
   end
 

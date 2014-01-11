@@ -1,8 +1,10 @@
-%h3= "Add a comment to Post #{@post.title}"
-
-=form_for [@post, @comment] do |f|
-	.field= f.label :body
-	%br/ 
-	.field= f.text_area :body
-	%br/ 
-	.action= f.submit "Add comment"
+%h3= "Add a comment to Post: '#{@post.title}'"
+%table{:class => "rounded small-frm"} 
+	%tr 
+		%td 
+			=form_for [@post, @comment] do |f|
+				.field= f.label :body, "Comments"
+				 
+				.field= f.text_area :body, :class => "form-field"
+				%br/ 
+				%div{:style => "text-align: center"}= f.submit "Add comment", :class => "btn my-btn"

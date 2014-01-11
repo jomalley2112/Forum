@@ -14,3 +14,13 @@
 //= require_tree .
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require jquery.expander.min.js
+
+function clear_search(icon) {
+	$(icon).closest("form").find("input#query").val("");
+	$(icon).closest("form").submit();
+}
+
+// function show_more(text_container, full_text) {
+// 	$(text_container)
+// }

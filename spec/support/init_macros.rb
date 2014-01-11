@@ -8,6 +8,18 @@ module InitMacros
 	    posts << FactoryGirl.create(:post, :user_id => user.id, :title => "Post 3", :body => "In Post 3 we talk about...", :public => true) 
 	end
 
+	def create_lengthy_post(user=nil)
+		create_member_user unless user
+		user ||= @user
+		body_text = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae 
+		architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+		body_text += "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae 
+		architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+		body_text += "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae 
+		architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+		FactoryGirl.create(:post, :user_id => user.id, :title => "Lengthy Post", :body => body_text, :public => true)
+	end
+
 	# def create_anon_posts
 	# 	posts = []
 	# 	posts << FactoryGirl.create(:post, :title => "Post 1", :body => "In Post 1 we talk about...", :public => true) 

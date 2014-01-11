@@ -10,6 +10,7 @@ class UsersController < ApplicationController
       auto_login(@user)
   		redirect_to user_posts_path, :notice => "Member signed up!"
   	else
+      flash_alert(@user, msg="Unable to create user")
   		render :new
   	end
   end

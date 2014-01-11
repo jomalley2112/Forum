@@ -23,14 +23,28 @@ feature "Posts" do
     	page.should have_content("Congratulations your post has been posted to the Forum!")
     	page.should have_content("This is the main body of the post")
     end
+    it "displays an error message when a user tries to submit one with more than 75 characters in the title" do
+      create_and_login_member_user
+      click_link("Create new Post")
+      fill_in("Title", :with => "This is more than 75 characters. This is more than 75 characters. This is more than 75 characters. This is more than 75 characters.")
+      fill_in("Body", :with => "This is the main body of the post")
+      check("Public")
+      click_button("Submit Post")
+      page.should have_content("Unable to save new post.")
+      page.should have_content("is too long (maximum is 75 characters)")
+      fill_in("Title", :with => "This is less than 75 characters.")
+      click_button("Submit Post")
+      page.should have_content("Congratulations your post has been posted to the Forum!")
+    end
     it "can be commented on by a logged-in member", :js => false do
     	#pending "Will need a comment link next to each post"
     	posts = create_posts
     	create_and_login_member_user
     	click_link("View all Posts")
     	all(:link, "add a comment")[0].click
-    	page.should have_content("Add a comment to Post #{posts[0].title}") #
-    	fill_in("Body", :with => "I have something to say about post #{posts[0].title}") 
+      #binding.pry
+    	page.should have_content("Add a comment to Post: '" + posts[0].title + "'")
+    	fill_in("Comments", :with => "I have something to say about post #{posts[0].title}") 
     	click_button("Add comment")
     	page.should have_content("Your comment has been added")
     	#make sure its shown within (or just after) the correct post?
@@ -96,7 +110,7 @@ feature "Posts" do
   		posts = create_desc_timed_posts #array is ordered by created_at desc
   		visit root_path
       page.should have_content("Current Posts")
-  		post_elmnts = page.all("div.post")
+  		post_elmnts = page.all(".post")
   		posts.each_with_index do |post, i|
   			post.title.should eq(post_elmnts[i].first("h4").text)
   		end
@@ -106,7 +120,7 @@ feature "Posts" do
   		visit root_path
       page.should have_content("Current Posts")
   		select("Title", :from => "Sort by")
-  		post_elmnts = page.all("div.post")
+  		post_elmnts = page.all(".post")
   		posts.sort_by!(&:title)
       posts.each_with_index do |post, i|
   			post.title.should eq(post_elmnts[i].first("h4").text)
@@ -134,7 +148,7 @@ feature "Posts" do
       posts = create_desc_timed_posts(@user) #array is ordered by created_at desc
       visit posts_path
       page.should have_content("Posted by #{@username}")
-      post_elmnts = page.all("div.post")
+      post_elmnts = page.all(".post")
       posts.each_with_index do |post, i|
         post.title.should eq(post_elmnts[i].first("h4").text)
       end
@@ -145,7 +159,7 @@ feature "Posts" do
       visit posts_path
       page.should have_content("Posted by #{@username}")
       select("Title", :from => "Sort by")
-      post_elmnts = page.all("div.post")
+      post_elmnts = page.all(".post")
       posts.sort_by!(&:title)
       posts.each_with_index do |post, i|
         post.title.should eq(post_elmnts[i].first("h4").text)
@@ -197,26 +211,82 @@ feature "Posts" do
     end
   end
 
-  describe "The titles and bodies of posts can be searched" do
-    describe "when a member searches... all matching posts (and comments) are searched, displayed and can be clicked on" do
-      it "searches all post titles and bodies for the text entered", :js => true do
-        posts = create_other_members_posts #posts created by other user
-        create_and_login_member_user
-        click_link("View all Posts")
-        fill_in('query', :with=> "Post 3" )
-        find('#query').native.send_keys(:return)
-        #first("a.icon-search").click
-        binding.pry
-        page.should have_content("1 post matched your search")
-        fill_in('query', :with=> "we talk about" )
-        first("a.icon-search").click
-        page.should have_content("5 posts matched your search")
+  describe "Searching Posts" do
+
+    describe "The titles and bodies of posts can be searched" do
+      describe "when a member searches... all matching posts (and comments) are searched, displayed and can be clicked on" do
+        it "searches all post titles and bodies for the text entered", :js => true do
+          create_other_members_posts #posts created by other user
+          create_and_login_member_user
+          click_link("View all Posts")
+          fill_in('query', :with=> "Post 3" )
+          find('#query').native.send_keys(:return)
+          page.should have_content("1 post matched your search")
+          fill_in('query', :with=> "we talk about" )
+          find('#query').native.send_keys(:return)
+          page.should have_content("3 posts matched your search")
+        end
       end
+      
+      describe "When a non-member searches... all posts are searched, but just the titles are displayed for the private ones." do
+        it "searches all post titles and bodies for the text entered", :js => true do
+          create_posts
+          visit(root_path)
+          fill_in('query', :with=> "Post" )
+          find('#query').native.send_keys(:return)
+          page.should have_content("3 posts matched your search")
+        end
+        it "displays only the titles of private posts", :js => true do
+          create_posts
+          visit(root_path)
+          fill_in('query', :with=> "Post" )
+          find('#query').native.send_keys(:return)
+          page.should have_content("In Post 1 we talk about...")
+          page.should have_content("In Post 3 we talk about...")
+          page.should have_content("Post 2")
+          page.should have_no_content("In Post 2 we talk about...")
+        end
+
+        it "clears the search text and reloads the page when the clear 'X' button is clicked", :js => true do
+          create_posts
+          visit(root_path)
+          fill_in('query', :with=> "3" )
+          find('#query').native.send_keys(:return)
+          page.should have_content("Post 3")
+          page.should have_no_content("Post 1")
+          page.should have_no_content("Post 2")
+          page.first("i.close").click
+          page.should have_content("Post 1")
+          page.should have_content("Post 2")
+          page.should have_content("Post 3")
+        end
+
+      end
+
     end
-    
-    describe "When a non-member searches all posts are searched, but just the titles are displayed and only public posts (and comments) can be clicked on." do
-      it "" do
-      end
+  end
+
+  describe "When posts are over a certain length they get truncated with a link that allows 
+            the rest of it to be displayed (in page) and re-hidden" do
+    it "only shows the first X characters of the body text", :js => true do #:js needs to be true
+      create_lengthy_post
+      visit(root_path)
+      #binding.pry
+      full_body = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+      full_body += "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+      full_body += "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+      page.should have_no_css('div.body_text', :text => full_body, :visible => true)
+    end
+
+    it "allows the user to see the entire body text", :js => true do #:js needs to be true
+      create_lengthy_post
+      visit(root_path)
+      full_body = "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+      full_body += "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+      full_body += "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum, eos, ad, natus iste sunt molestiae architecto quas cupiditate harum culpa ipsa fuga consequuntur quibusdam non tempore eius laborum placeat voluptas?"
+      page.should have_no_css('div.body_text', :text => 'full_body', :visible => true)
+      click_link("[more]")
+      page.should have_css('div.body_text', :text => full_body, :visible => true)
     end
 
   end

@@ -14,5 +14,33 @@
 
 
 .post-header {text-align: center}
-div.post {padding: 10px;}
+td.post {padding: 10px; border: 2px #5b5b5b solid; background-color: #f4f4f4} /*#f1ff8c*/
 form.sort {margin-bottom: 0px}
+table.frm {width: 100%;}
+table.small-frm {padding: 15px; padding-bottom: 5px; width: 450px;}
+table.rounded {
+	filter:alpha(opacity=92);
+    opacity:.92;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    -khtml-border-radius: 10px;
+    border-radius: 10px;
+	border-collapse: separate; 
+	border-spacing: 4px;
+    border: 2px #5b5b5b solid;
+    background-color: #be9d23;
+ }
+.form-field { width: 500px; }
+.small-frm-field {width: 300px;}
+textarea.form-field { height: 150px; }
+td.lbl { vertical-align: text-top; padding-top: 5px; padding-right: 10px; }
+td.lbl-sngl-ln { vertical-align: text-top; padding-top: 10px; padding-right: 10px; padding-bottom: 0px }
+.my-btn {
+	-webkit-border-radius: 4px;
+    -moz-border-radius: 4px;
+    -khtml-border-radius: 4px;
+    border-radius: 4px;
+    border: 1px solid #cccccc
+}
+td.btn-cell {text-align: center; width: 100%;}
+a.nav {color: #5d0fff;}

@@ -1,4 +1,5 @@
 -if flash[:alert]
-	.text-error= flash[:alert]
+	.text-error
+		= flash[:alert]
 -elsif flash[:notice]
 	.text-success= flash[:notice]
