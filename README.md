@@ -19,6 +19,8 @@ This app was created as an exercise. The following requirements where given:
  * When posts are over a certain length they get truncated with a link that allows the rest of it to be displayed (in page) and re-hidden
  * The number of comments is displayed for each post
  * Look and Feel
-   * Should be simple & clean with subtly bright colors
-   * Use slightly rounded corners where possible
-   * Shouldn’t appear too formal
+  * Should be simple & clean with subtly bright colors
+  * Use slightly rounded corners where possible
+  * Shouldn’t appear too formal
+
+  (From README.md)

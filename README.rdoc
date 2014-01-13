@@ -22,3 +22,6 @@ This app was created as an exercise. The following requirements where given:
    * Should be simple & clean with subtly bright colors
    * Use slightly rounded corners where possible
    * Shouldn’t appear too formal
+
+
+(From README.rdoc)
