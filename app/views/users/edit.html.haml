@@ -8,7 +8,7 @@
 				%table{:style => "width: 100%"} 
 					%tr 
 						%td.lbl-sngl-ln= label_tag :email
-						%td= text_field_tag :email, @user.email, :class => "small-frm-field"
+						%td= email_field_tag :email, @user.email, :class => "small-frm-field"
 					%tr 
 						%td{:colspan => "2", :class => "btn-cell"}
 							= submit_tag "Save Email", :class => "btn"

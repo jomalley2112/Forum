@@ -57,3 +57,16 @@ a.nav {color: #766953;}
 a.nav:hover {color:#584d3b;}
 div.body_text {width: 100%; padding-left: 20px; padding-right: 20px}
 span.comment_body {font-size:  small}
+
+.right-inner-addon {
+    position: relative;
+}
+/*.right-inner-addon input {
+    padding-right: 10px;    
+}*/
+.right-inner-addon i {
+    position: absolute;
+    right: 5px;
+    padding: 8px 5px;
+    pointer-events: none;
+}

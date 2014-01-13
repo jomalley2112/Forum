@@ -19,10 +19,13 @@
 		%td{:style => "width: 50%; vertical-align: top"}	
 			#search
 				=form_tag @search_form_action, :method => :get, :class => "navbar-search pull-right" do
-					=text_field_tag :query, params[:query], :class => "search-query", :placeholder => "Search"
-					/ %button{:class => "icon-search close", :type => "submit"}
-					%i{:alt => "Clear Search", :class => "close icon-remove-sign", :style => "vertical-align: middle;", :onclick => "clear_search(this);"}
-		%td{:style => "width: 10px"} &nbsp;
+					.right-inner-addon 
+						%i.icon-search 
+						=text_field_tag :query, params[:query], :class => "search-query", :placeholder => "Search"
+						/ %button{:class => "icon-search close", :type => "submit"}
+						
+		%td{:style => "width: 10px"}
+			%i{:alt => "Clear Search", :class => "close icon-remove-sign", :style => "vertical-align: middle; color: black", :onclick => "clear_search(this);"}
 		%table{:class => "rounded", :style => "width: 100%"}
 			-if @posts.size > 0
 				-@posts.each do |post|
