@@ -12,15 +12,15 @@ This app was created as an exercise. The following requirements where given:
  * Private posts and their comments can only be viewed by members
  * Only members can post or comment on posts
  * The titles and bodies of posts can be searched
-  * When a non-member searches all posts are searched, but just the titles are displayed..
+    * When a non-member searches all posts are searched, but just the titles are displayed..
  * Posts can be sorted by days old (default), number of comments,  or title
  * Each member’s posts will display their username 
  * Wherever usernames are displayed they should be links which when clicked show all the posts (and responses?) the user has created
  * When posts are over a certain length they get truncated with a link that allows the rest of it to be displayed (in page) and re-hidden
  * The number of comments is displayed for each post
  * Look and Feel
-  * Should be simple & clean with subtly bright colors
-  * Use slightly rounded corners where possible
-  * Shouldn’t appear too formal
+    * Should be simple & clean with subtly bright colors
+    * Use slightly rounded corners where possible
+    * Shouldn’t appear too formal
 
   (From README.md)
