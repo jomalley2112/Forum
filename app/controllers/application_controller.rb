@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   #before_filter :require_login
 
 
-  private
+  protected
   def flash_alert(obj, msg)
     err_str = view_context.render_for_controller("validation_errors", {:obj => obj})
   	msg += (" for the following " + view_context.pluralize(obj.errors.full_messages.length, "reason") + ":#{err_str}") unless obj.errors.messages.size < 1

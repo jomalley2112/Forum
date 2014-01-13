@@ -148,16 +148,16 @@ feature "Users" do
   describe "Members can edit their email and password", :js => false do
   	it "allows members to update their email address" do
 	  	create_and_login_member_user
-	  	click_link("edit")
+	  	click_link(@username)
 	  	fill_in("Email", :with => "updated_email@email.com")
 	  	click_button("Save Email")
 	  	page.should have_content("Member info updated")
-	  	click_link("edit")
+	  	click_link(@username)
 	  	page.first("input#email").value.should eq("updated_email@email.com")
     end
     it "allows members to change their password", :js => false do
 	  	create_and_login_member_user
-	  	click_link("edit")
+	  	click_link(@username)
 	  	fill_in("New Password", :with => "new_password")
 	  	fill_in("Confirm Password", :with => "new_password")
 	  	click_button("Save Password")

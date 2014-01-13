@@ -22,7 +22,7 @@ class UsersController < ApplicationController
   def update_user_email
     @user = User.find(params[:id])
     if @user.update_attribute(:email, params[:email])
-      redirect_to user_posts_path, :alert => "Member info updated!"
+      redirect_to user_posts_path, :notice => "Member info updated!"
     else
       flash.now.alert = "Unable to update member's info."
       render :edit
@@ -33,9 +33,10 @@ class UsersController < ApplicationController
   def update
     @user = User.find(params[:id])
     if @user.update_attributes(params.require(:user).permit(:password, :password_confirmation, :email))
-      redirect_to user_posts_path, :alert => "Member info updated!"
+      redirect_to user_posts_path, :notice => "Member info updated!"
     else
-      flash.now.alert = "Unable to update user."
+      #flash.now.alert = "Unable to update user."
+      flash_alert(@user, "Unable to update user.")
       render :edit
     end
     

@@ -10,7 +10,7 @@ class CommentsController < ApplicationController
   	@post = Post.find(params[:post_id])
   	@comment = @post.comments.build(params.require(:comment).permit(:body))
   	if @comment.save
-  		redirect_to root_url, :alert => "Your comment has been added"
+  		redirect_to root_url, :notice => "Your comment has been added"
   	else
   		flash.now.alert = "Unable to save your comment"
   		render :new

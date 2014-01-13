@@ -12,5 +12,14 @@ describe ApplicationHelper do
 		get_age(a_time - 27.seconds, "seconds", a_time).should eq(27)
 	end
 
+	it "will render a partial and pass local variables to it" do
+		obj = User.create
+		err_str = render_for_controller("validation_errors", {:obj => obj})
+		err_str.should include("Username can't be blank")
+		err_str.should include("Email can't be blank")
+		err_str.should include("Password can't be blank")
+		err_str.should include("Password is too short")
+		err_str.should include("Password confirmation can't be blank")
+	end
 	
 end

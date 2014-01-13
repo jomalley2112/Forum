@@ -7,7 +7,7 @@ class PostsController < ApplicationController
     end
     if current_user && current_user.is_member
       @member = true
-      if request.fullpath.gsub(/\/\?.*/, "").split("/").length > 1
+      if request.fullpath.gsub(/\/\?.*/, "").split("/").length > 1 && params[:user_id].nil?
         #if there's anything passed to the root other than a ?-delimited param set then it must be trying to go to user-specific posts
         redirect_to user_posts_path(params) and return
       end
@@ -51,7 +51,7 @@ class PostsController < ApplicationController
     if @post.update_attributes(params.require(:post).permit(:title, :body, :public))
       redirect_to user_posts_path(), :notice => "Post has been edited!"
     else
-      flash.now.notice = "Unable to edit post."
+      flash_alert(@post, "Unable to edit post.")
       render :edit
     end
   end
@@ -67,7 +67,6 @@ class PostsController < ApplicationController
     if @post.save
       redirect_to posts_path, :notice => "Congratulations your post has been posted to the Forum!"
     else
-      #flash.now.alert = "Unable to save new post." + @post.errors.messages
       flash_alert(@post, "Unable to save new post.")
       render :new
     end
@@ -77,7 +76,7 @@ class PostsController < ApplicationController
     @post = Post.find(params[:id])
     redirect_to(posts_path, :alert => "You don't have permission to delete the post") and return unless @post.user == current_user
     @post.destroy
-    redirect_to user_posts_path(), :alert => "Post was deleted!"
+    redirect_to user_posts_path(), :notice => "Post was deleted!"
   end
 
   

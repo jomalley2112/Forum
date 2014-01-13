@@ -2,7 +2,8 @@ class Post < ActiveRecord::Base
 	belongs_to :user
 	has_many :comments
 	validates_presence_of :user
-	validates :title, :length => {:maximum => 75, :truncate => true}
+	validates :title, :length => {in: 1..75, :allow_nil => false}
+
 
 	def self.ordered_by(param=nil)
 		if param.nil?

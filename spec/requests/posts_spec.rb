@@ -180,6 +180,14 @@ feature "Posts" do
         prev_comm_cnt = curr_comm_cnt
       end
     end
+    it "shows all posts when a logged-in member clicks on 'View all Posts' and then resorts them", :js => true do #NOTE: this test requires :js => true
+      create_and_login_member_user
+      posts = create_posts_w_rand_comments(@user)
+      click_link("View all Posts")
+      page.should have_content("Current Posts")
+      select("Comments", :from => "Sort by")
+      page.should have_content("Current Posts")
+    end
   end
 
   describe "Each member’s posts will display their username " do

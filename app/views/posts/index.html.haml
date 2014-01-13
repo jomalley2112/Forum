@@ -9,14 +9,14 @@
 %br/ 
 %table
 	%tr 
-		%td{:style => "vertical-align: bottom"}  
+		%td{:style => "vertical-align: bottom; width: 50%"}  
 			#sort
-				=form_tag posts_path, :method => :get, :class => "sort pull-left" do |f|
+				=form_tag @search_form_action, :method => :get, :class => "sort pull-left" do |f|
 					&nbsp;
 					= label_tag :sort_by
 					= select_tag :sort_by, options_for_select(["Age", "Title", "Comments"], params[:sort_by]), :onchange => "submit()"
 		/ %td{:style => "width: 225px"} &nbsp;
-		%td{:style => "width: 90%;"}	
+		%td{:style => "width: 50%; vertical-align: top"}	
 			#search
 				=form_tag @search_form_action, :method => :get, :class => "navbar-search pull-right" do
 					=text_field_tag :query, params[:query], :class => "search-query", :placeholder => "Search"
@@ -32,7 +32,7 @@
 							.posted_by= link_to "posted by #{post.user.username}", posts_path(:user_id => post.user.id)
 							%h4{:class => "post-header"}= post.title
 							-unless @searched && !@user && !post.public
-								%div{:style => "width: 700px"}
+								%div{:style => "width: 90%"}
 									%div
 										%b= post.public ? "Public - " : "Private - "
 										= get_age(post.created_at, "hours").to_s + " hours old"
@@ -42,7 +42,7 @@
 									-post.comments.each_with_index do |comment, i|
 										%span.label
 											= "Comment " + (i + 1).to_s + ": "
-										= comment.body
+										%span.comment_body= comment.body
 										%br/
 									=link_to "add a comment", new_post_comment_path(post)
 									-if @user
@@ -57,7 +57,7 @@
 -content_for :head do
 	%script{:language => "javascript"} 
 		$(document).ready(function() {
-		$('div.body_text').expander({
+		$('div.body_text, span.comment_body').expander({
 		slicePoint:       255,  //TODO: This should not be hardcoded!
 		expandPrefix:     '... ',
 		expandText:       '[more]',
