@@ -23,4 +23,48 @@ This app was created as an exercise. The following requirements where given:
     * Use slightly rounded corners where possible
     * Shouldn’t appear too formal
 
-  (From README.md)
+Enter new posts
+ 1. Visit root of site ("/")
+ 2. Click on "Become a member"
+ 3. Enter Username, Email and Password
+ 4. Create User
+
+Click "Create new Post"
+ 5. Enter a title and some body text (try pasting in over 255 chars on one)
+ 6. Check Public for at least one and uncheck for at least one
+ 7. Submit Post
+ 8. Repeat a few times
+
+Member Viewing Posts
+ 9. Click "View all Posts"
+ 10. Should see all posts ordered by age descending
+ 11. Try other Sort by fields
+ 12. Fill in search with a word or part of a word that appears in the title or body of posts and press enter
+ 13. Click on the remove icon to clear the search results
+
+Member adding Comments to a post
+ 14. Click on the "add a comment" link in one of the posts
+ 15. Enter over 255 characters
+ 16. Add Comment
+ 17. Should see a more link where there is over 255 characters
+ 18. Click on "[more]" and "[less]" to test the truncation fucntionality
+
+Member manages Posts
+ 19. Click on the "View your Posts" link
+ 20. Edit and/or delete some of your posts
+
+Member manages settings
+ 21. Click on your username in the top left
+ 22. Edit your info
+
+Member Logs out
+ 23. Click the "Member log out" link in the top right
+
+Non-member views posts:
+ 1. Visit root of site ("/")
+ 2. Should only see public posts
+ 3. Click on "add comment" (should get a message that you need to be logged in)
+ 4. Click on "posted by " Username to see the public posts from that user only
+ 5. Search will return results from both public and private posts, but provate posts won't show the body
+
+   (rom README.md)

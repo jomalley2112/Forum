@@ -16,9 +16,10 @@
 //= require twitter/bootstrap
 //= require jquery.expander.min.js
 
-function clear_search(icon) {
-	$(icon).closest("form").find("input#query").val("");
-	$(icon).closest("form").submit();
+function clear_search() {
+	frm = $("#search-form");
+	$(frm).find("input#query").val("");
+	$(frm).submit();
 }
 
 // function show_more(text_container, full_text) {

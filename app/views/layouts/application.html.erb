@@ -22,8 +22,8 @@
   	<% if current_user %>
   		<%= link_to "Create new Post", new_post_path, :class => "nav" %> |
       <%= link_to "View your Posts", user_posts_path, :class => "nav" %> |
-      <%= link_to "View all Posts", root_path, :class => "nav" %>
-  	<% end %>
+    <% end %>
+    <%= link_to "View all Posts", root_path, :class => "nav" %>
   </div>
 
   <%= render "flash_messages" %>
